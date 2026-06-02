@@ -18,7 +18,7 @@ pipeline {
 
         stage('Load Image To Minikube') {
             steps {
-                bat 'minikube image load my-html:latest'
+                bat 'docker build -t my-html:latest .'
             }
         }
 
