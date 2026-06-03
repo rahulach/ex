@@ -3,7 +3,6 @@ pipeline {
 
     parameters {
         booleanParam(name: 'DEPLOY_TO_K8S', defaultValue: false, description: 'Enable Kubernetes deployment (requires kubeconfig on Jenkins agent)')
-        booleanParam(name: 'USE_MINIKUBE', defaultValue: true, description: 'Load image into Minikube instead of rebuilding it for the cluster')
     }
 
     stages {
@@ -21,14 +20,8 @@ pipeline {
         }
 
         stage('Load Image To Minikube') {
-            when {
-                allOf {
-                    expression { return params.DEPLOY_TO_K8S == true }
-                    expression { return params.USE_MINIKUBE == true }
-                }
-            }
             steps {
-                bat 'minikube image load my-html:latest'
+                bat 'docker build -t my-html:latest .'
             }
         }
 
