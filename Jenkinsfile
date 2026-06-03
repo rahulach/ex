@@ -19,12 +19,6 @@ pipeline {
             }
         }
 
-        stage('Load Image To Minikube') {
-            steps {
-                bat 'docker build -t my-html:latest .'
-            }
-        }
-
         stage('Deploy To Kubernetes') {
             when {
                 expression { return params.DEPLOY_TO_K8S == true }
